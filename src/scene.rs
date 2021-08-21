@@ -9,18 +9,18 @@ pub trait Scene {
 }
 
 pub struct SceneManager {
-    current_scene: Box<Scene>,
+    pub current_scene: Box<Scene>,
 }
 
 impl SceneManager {
-    fn update(&mut self) {
+    pub fn update(&mut self) {
         match self.current_scene.update() {
             Message::None => (),
             Message::NextScene(scene) => self.current_scene = scene,
         };
     }
 
-    fn draw(&self) {
+    pub fn draw(&self) {
         self.current_scene.draw();
     }
 }
