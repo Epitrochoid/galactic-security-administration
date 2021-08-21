@@ -3,6 +3,7 @@ use macroquad::prelude::*;
 mod player;
 mod item;
 mod bag;
+mod scene;
 
 #[macroquad::main("Galactic Security Administration")]
 async fn main() {
