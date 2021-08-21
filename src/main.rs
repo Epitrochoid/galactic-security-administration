@@ -11,10 +11,11 @@ use crate::scene::SceneManager;
 
 #[macroquad::main("Galactic Security Administration")]
 async fn main() {
-    let scene_manager = SceneManager {current_scene: Box::new(MainMenu{})};
+    let mut scene_manager = SceneManager {current_scene: Box::new(MainMenu {game_started: false})};
     loop {
         clear_background(BLACK);
 
+        scene_manager.update();
         scene_manager.draw();
 
         next_frame().await

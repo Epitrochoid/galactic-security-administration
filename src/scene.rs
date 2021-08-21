@@ -5,7 +5,7 @@ pub enum Message {
 
 pub trait Scene {
     fn update(&mut self) -> Message;
-    fn draw(&self) -> ();
+    fn draw(&mut self) -> ();
 }
 
 pub struct SceneManager {
@@ -20,7 +20,7 @@ impl SceneManager {
         };
     }
 
-    pub fn draw(&self) {
+    pub fn draw(&mut self) {
         self.current_scene.draw();
     }
 }
