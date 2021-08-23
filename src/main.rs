@@ -7,11 +7,15 @@ mod scene;
 mod scenes;
 
 use crate::scenes::main_menu::MainMenu;
+use crate::scenes::level::Level;
 use crate::scene::SceneManager;
 
 #[macroquad::main("Galactic Security Administration")]
 async fn main() {
-    let mut scene_manager = SceneManager {current_scene: Box::new(MainMenu {game_started: false})};
+    let first_level = Level::new("This is the intro".to_string());
+    let mut scene_manager = SceneManager {
+        current_scene: Box::new(MainMenu::new(first_level))
+    };
     loop {
         clear_background(BLACK);
 

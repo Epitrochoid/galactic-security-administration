@@ -7,16 +7,25 @@ use macroquad::ui::{
 };
 
 use crate::scene::{Scene, Message};
-use crate::scenes::game_over::GameOver;
 
 pub struct MainMenu {
     pub game_started: bool,
+    pub first_level: Option<Box<Scene>>,
+}
+
+impl MainMenu {
+    pub fn new(first_level: Box<Scene>) -> Self {
+        MainMenu {
+            game_started: false,
+            first_level: Some(first_level),
+        }
+    }
 }
 
 impl Scene for MainMenu {
     fn update(&mut self) -> Message {
         match self.game_started {
-            true => Message::NextScene(Box::new(GameOver{})),
+            true => Message::NextScene(self.first_level.take().expect("MainMenu to be dropped")),
             false => Message::None,
         }
     }
