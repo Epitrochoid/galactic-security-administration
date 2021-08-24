@@ -25,7 +25,7 @@ impl Scene for LevelIntro {
 
     fn draw(&mut self) -> () {
         draw_text(&self.intro_text, 200., 100., 40., WHITE);
-        if root_ui().button(vec2(200., 200.), "Start Shift") {
+        if root_ui().button(vec2(200., 200.), "Start Shift!") {
             self.start = true;
         }
     }
