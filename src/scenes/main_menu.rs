@@ -1,20 +1,23 @@
 use macroquad::prelude::*;
 
-use macroquad::ui::{
-    hash, root_ui,
-    widgets::{self, Group},
-    Ui,
-};
+// use macroquad::ui::{
+//     hash, root_ui,
+//     widgets::{self, Group},
+//     Ui,
+// };
 
+use macroquad::ui::root_ui;
+
+use crate::assets::manager::AssetManager;
 use crate::scene::{Scene, Message};
 
 pub struct MainMenu {
     pub game_started: bool,
-    pub first_level: Option<Box<Scene>>,
+    pub first_level: Option<Box<dyn Scene>>,
 }
 
 impl MainMenu {
-    pub fn new(first_level: Box<Scene>) -> Self {
+    pub fn new(first_level: Box<dyn Scene>) -> Self {
         MainMenu {
             game_started: false,
             first_level: Some(first_level),
@@ -30,11 +33,10 @@ impl Scene for MainMenu {
         }
     }
 
-    fn draw(&mut self) -> () {
+    fn draw(&mut self, asset_manager: &AssetManager) -> () {
         draw_text("Galactic Security Administration", 100., 100., 30., WHITE);
 
         if root_ui().button(vec2(100., 150.), "Start Game") {
-            println!("start game pressed");
             self.game_started = true;
         }
     }
