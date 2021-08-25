@@ -3,6 +3,7 @@ use macroquad::ui::{
     root_ui
 };
 
+use crate::assets::manager::AssetManager;
 use crate::scene::{Scene, Message};
 
 pub struct Level {
@@ -11,7 +12,7 @@ pub struct Level {
 
 pub struct LevelIntro {
     pub intro_text: String,
-    pub main_level: Option<Box<Scene>>,
+    pub main_level: Option<Box<dyn Scene>>,
     pub start: bool,
 }
 
@@ -23,11 +24,12 @@ impl Scene for LevelIntro {
         }
     }
 
-    fn draw(&mut self) -> () {
-        draw_text(&self.intro_text, 200., 100., 40., WHITE);
+    fn draw(&mut self, asset_manager: &AssetManager) -> () {
         if root_ui().button(vec2(200., 200.), "Start Shift!") {
             self.start = true;
         }
+
+        draw_text(&self.intro_text, 200., 100., 40., WHITE);
     }
 }
 
@@ -39,8 +41,13 @@ impl Scene for LevelBody {
         Message::None
     }
 
-    fn draw(&mut self) -> () {
-        draw_rectangle(100., 90., 520., 300., WHITE);
+    fn draw(&mut self, asset_manager: &AssetManager) -> () {
+        draw_rectangle(100., 90., 520., 300., Color::new(0.5, 0.5, 0.7, 1.0));
+        let asset_option = asset_manager.assets_map.get(&"wave".to_string());
+        if (asset_option.is_some()) {
+            let asset = asset_option.unwrap();
+            draw_texture(asset.loaded_texture, 100., 90., WHITE);
+        }
     }
 }
 
