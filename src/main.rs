@@ -16,6 +16,7 @@ use crate::scene::SceneManager;
 async fn main() {
     let mut asset_manager = AssetManager::new();
     asset_manager.load_assets().await;
+
     let first_level = Level::new("This is the intro".to_string());
     let mut scene_manager = SceneManager {
         current_scene: Box::new(MainMenu::new(first_level))
