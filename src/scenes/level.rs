@@ -5,6 +5,7 @@ use macroquad::ui::{
 
 use crate::assets::manager::AssetManager;
 use crate::scene::{Scene, Message};
+use crate::bag::Bag;
 
 pub struct Level {
     pub intro_text: String,
@@ -33,19 +34,19 @@ impl Scene for LevelIntro {
     }
 }
 
-struct LevelBody {
+struct LevelBody<'a> {
+    bags: &'a Vec<Bag<'a>>,
 }
 
-impl Scene for LevelBody {
+impl Scene for LevelBody<'_> {
     fn update(&mut self) -> Message {
         Message::None
     }
 
     fn draw(&mut self, asset_manager: &AssetManager) -> () {
         draw_rectangle(100., 90., 520., 300., Color::new(0.5, 0.5, 0.7, 1.0));
-        let asset_option = asset_manager.assets_map.get(&"wave".to_string());
-        if (asset_option.is_some()) {
-            let asset = asset_option.unwrap();
+        let asset_option = asset_manager.assets_map.get("wave");
+        if let Some(asset) = asset_option {
             draw_texture(asset.loaded_texture, 100., 90., WHITE);
         }
     }
